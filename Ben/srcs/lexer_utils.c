@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:14:27 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/26 18:44:08 by bschor           ###   ########.fr       */
+/*   Updated: 2024/04/27 15:37:51 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ int	ft_nodjoin(t_lexer *first, t_lexer *second)
 	free(second);
 	return (1);
 }
-
-
 
 /**
  * @brief waits for the second quote and duplicates the smaller string
@@ -133,7 +131,8 @@ char	*handle_word(t_system *systm, int *i)
 }
 
 /**
- * @brief returns the right token and increments the value of i by the right amount
+ * @brief returns the right token and increments the value of i by the right
+ * amount
  * 
  * @param systm A pointer to the system struct.
  * @param i A pointer to the current index in the prompt string.

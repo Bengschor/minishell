@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:46 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/26 16:20:40 by bschor           ###   ########.fr       */
+/*   Updated: 2024/04/27 15:30:05 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # define TKNSTX "minishell: syntax error near unexpected token `%c'\n"
 # define TKNSSTX "minishell: syntax error near unexpected token `%s'\n"
 # define NLSTX "minishell: unexpected token `newline'\n"
-
 
 /*
 tokens are written as their characters to make the conditions more readable

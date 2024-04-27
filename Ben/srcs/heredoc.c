@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:14:11 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/26 19:41:39 by bschor           ###   ########.fr       */
+/*   Updated: 2024/04/27 15:33:59 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
  * @param systm A pointer to the system struct.
  * @param key The key string that indicates the end of input.
  * @param p An array containing file descriptors for the pipe.
- * @param heredoc_type The type of heredoc (1 if expansion is needed, 0 otherwise).
+ * @param heredoc_type The type of heredoc (1 if expansion is needed,
+ * 0 otherwise).
  * @return 0 on success, a non-zero value on failure.
  * @line by line:
  * 1: Declare a buffer to store input strings.
@@ -59,7 +60,8 @@ static int	get_strings(t_system *systm, char *key, int p[2], int heredoc_type)
  * @return 0 on success, a non-zero value on failure.
  * @line by line:
  * 1: Close the write end of the pipe.
- * 2-6: Close the input file descriptor if it's greater than 2, otherwise update it.
+ * 2-6: Close the input file descriptor if it's greater than 2, otherwise
+ * update it.
  * 7: Return 0 on success.
  */
 static int	handle_strings(t_system *systm, int exec_i, int p[2])
@@ -82,8 +84,10 @@ static int	handle_strings(t_system *systm, int exec_i, int p[2])
  * 1: Move to the next token in the lexer linked list.
  * 2: Get the type of heredoc and create a pipe.
  * 3-8: Fork a child process to handle input strings.
- * 9-13: Child process reads input strings until the key is entered and writes them to the pipe.
- * 14: Parent process waits for the child process to complete and handles input strings.
+ * 9-13: Child process reads input strings until the key is entered and
+ * writes them to the pipe.
+ * 14: Parent process waits for the child process to complete and handles
+ * input strings.
  * 15: Return 0 on success.
  */
 int	heredoc(t_system *systm, int exec_i)

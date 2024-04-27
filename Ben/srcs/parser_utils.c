@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:48:24 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/26 19:39:41 by bschor           ###   ########.fr       */
+/*   Updated: 2024/04/27 15:32:53 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	free_strs(char **strs)
  * @param strs The array of strings to be freed.
  * @param i The index used for freeing strings in reverse order.
  * @line by line:
- * 1-4: Iterate over the array of strings in reverse order and free each string.
+ * 1-4: Iterate over the array of strings in reverse order and free each
+ * string.
  * 5: Free the memory allocated for the array of string pointers.
  */
 void	free_strs_crash(char **strs, int i)
@@ -62,7 +63,8 @@ void	free_strs_crash(char **strs, int i)
  * @line by line:
  * 1-6: Initialize variables and allocate memory for the new array.
  * 7-14: Copy existing strings from the original array to the new array.
- * 15-19: Add the new string to the new array and handle memory allocation errors.
+ * 15-19: Add the new string to the new array and handle memory allocation
+ * errors.
  * 20-21: Return the updated array of strings.
  */
 char	**ft_addstr(char **array, char *str)

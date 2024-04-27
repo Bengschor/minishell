@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:08:23 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/27 08:53:29 by bschor           ###   ########.fr       */
+/*   Updated: 2024/04/27 15:34:34 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@
  * @return EXIT_SUCCESS if quotes occur in pairs, EXIT_FAILURE otherwise.
  * @line by line:
  * 1-2: Initialize the index variable.
- * 3-18: Iterate through the string, checking if single and double quotes occur in pairs.
- * 4-9: Check for single quotes and verify if each opening quote has a corresponding closing quote.
- * 11-16: Check for double quotes and verify if each opening quote has a corresponding closing quote.
- * 19: Return EXIT_SUCCESS if all quotes occur in pairs, EXIT_FAILURE otherwise.
+ * 3-18: Iterate through the string, checking if single and double quotes
+ * occur in pairs.
+ * 4-9: Check for single quotes and verify if each opening quote has a
+ * corresponding closing quote.
+ * 11-16: Check for double quotes and verify if each opening quote has a
+ * corresponding closing quote.
+ * 19: Return EXIT_SUCCESS if all quotes occur in pairs, EXIT_FAILURE
+ * otherwise.
  */
 int	quotes_by_pair(char *str)
 {
@@ -50,12 +54,14 @@ int	quotes_by_pair(char *str)
 }
 
 /**
- * @brief Checks if the last token in the lexer linked list is a valid syntax.
+ * @brief Checks if the last token in the lexer linked list is a valid
+ * syntax.
  * 
  * @param last A pointer to the last node in the lexer linked list.
  * @return 0 if the syntax is valid, a non-zero value otherwise.
  * @line by line:
- * 1-6: Check if the last token is a special syntax token (HERED, APPEND, INTO, OUTTO),
+ * 1-6: Check if the last token is a special syntax token (HERED, APPEND,
+ * INTO, OUTTO),
  *      and return an error message if it is.
  * 7: Return 0 if the syntax is valid.
  */

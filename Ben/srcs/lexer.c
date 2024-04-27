@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:55:46 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/27 09:08:20 by bschor           ###   ########.fr       */
+/*   Updated: 2024/04/27 15:32:26 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ keeps them in quoted token (for the heredoc)
  * @line by line:
  * Iterates through the lexer nodes.
  * Checks if adjacent nodes are words without spaces in between.
- * Joins adjacent nodes if there are no spaces in the words and the adjacent node is quoted.
+ * Joins adjacent nodes if there are no spaces in the words and the
+ * adjacent node is quoted.
  */
 int	join_words(t_system *systm)
 {
@@ -169,7 +170,7 @@ int	main(void)
 
 	systm.env = env;
 	systm.status = 4210;
-	systm.prompt = "test rtyui | yrt twe wert\' tre\' | 53 6543 -5";
+	systm.prompt = "test rtyui |  | 53 6543 -5";
 	i = 0;
 	systm.lexer = NULL;
 	if (quotes_by_pair(systm.prompt))

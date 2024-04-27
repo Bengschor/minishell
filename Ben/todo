@@ -1,4 +1,5 @@
 
 - norm
+- gerer les signaux dans le heredoc
 - proteger TOUS les mallocs
 - leaks a la fin

@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:09:17 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/26 19:40:42 by bschor           ###   ########.fr       */
+/*   Updated: 2024/04/27 15:37:17 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@ what if there already is a fd ?
  * @line by line:
  * 1: Move to the next token in the lexer linked list.
  * 2-9: Open the file for reading (O_RDONLY) if the token is INTO.
- * 10-17: Open the file for writing (O_WRONLY | O_CREAT | O_TRUNC) if the token is OUTTO.
- * 18-25: Open the file for appending (O_WRONLY | O_CREAT | O_APPEND) if the token is APPEND.
- * 26-30: Handle file opening errors and update the file descriptor in the parser array.
+ * 10-17: Open the file for writing (O_WRONLY | O_CREAT | O_TRUNC) if the
+ * token is OUTTO.
+ * 18-25: Open the file for appending (O_WRONLY | O_CREAT | O_APPEND) if the
+ * token is APPEND.
+ * 26-30: Handle file opening errors and update the file descriptor in the
+ * parser array.
  * 31: Return 0 on success.
  */
 static int	redirect(t_system *systm, int exec_i, int token)
@@ -38,11 +41,11 @@ static int	redirect(t_system *systm, int exec_i, int token)
 	if (token == INTO)
 		fd = open(systm->lexer->str, O_RDONLY);
 	if (token == OUTTO)
-		fd = open(systm->lexer->str, O_WRONLY | O_CREAT | O_TRUNC,  00777);
+		fd = open(systm->lexer->str, O_WRONLY | O_CREAT | O_TRUNC, 00777);
 	if (token == APPEND)
 		fd = open(systm->lexer->str, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	if (fd == -1)
-		return (printf("ERROR OPENING FILE")); // mettre perror je pense
+		return (printf("ERROR OPENING FILE (faudrait mettre perror)"));
 	if (token == INTO)
 		systm->parser[exec_i].infile = fd;
 	else if (token == APPEND || token == OUTTO)
@@ -56,7 +59,8 @@ static int	redirect(t_system *systm, int exec_i, int token)
  * @param parser The parser array to be initialized.
  * @param max The maximum index of the parser array.
  * @line by line:
- * 1-8: Iterate over the parser array and initialize each element with default values.
+ * 1-8: Iterate over the parser array and initialize each element with
+ * default values.
  */
 static void	init_parser(t_parser *parser, int max)
 {
@@ -81,8 +85,10 @@ static void	init_parser(t_parser *parser, int max)
  * @return 0 on success.
  * @line by line:
  * 1-19: Iterate over the lexer linked list until a pipe token is encountered.
- * 2-8: Handle heredoc token, redirection tokens, and add words to the parser array.
- * 9-12: Move to the next node in the lexer linked list if a pipe token is encountered.
+ * 2-8: Handle heredoc token, redirection tokens, and add words to the parser
+ * array.
+ * 9-12: Move to the next node in the lexer linked list if a pipe token is
+ * encountered.
  */
 static int	format_exec(t_system *systm, int exec_i)
 {
@@ -110,9 +116,11 @@ static int	format_exec(t_system *systm, int exec_i)
  * @return 0 on success, a non-zero value on failure.
  * @line by line:
  * 1-3: Initialize the number of commands (exec_size) and the index variable i.
- * 4-6: Allocate memory for the parser array based on the number of pipes in the lexer linked list.
+ * 4-6: Allocate memory for the parser array based on the number of pipes in
+ * the lexer linked list.
  * 7: Initialize the parser array with default values.
- * 8-18: Iterate over the lexer linked list and format each command and redirection.
+ * 8-18: Iterate over the lexer linked list and format each command and
+ * redirection.
  * 19: Return 0 on success.
  */
 int	ft_parser(t_system *systm)
