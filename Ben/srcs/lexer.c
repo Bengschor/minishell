@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:55:46 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/27 09:04:29 by bschor           ###   ########.fr       */
+/*   Updated: 2024/04/27 09:08:20 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,9 +150,9 @@ void	ft_lexer(t_system	*systm)
 			add_lexer(systm, handle_word(systm, &i), 0);
 		i++;
 	}
-	ft_lextrim(systm);
 	expander(systm);
 	join_words(systm);
+	ft_lextrim(systm);
 }
 
 /*
