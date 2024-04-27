@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:55:46 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/27 08:54:01 by bschor           ###   ########.fr       */
+/*   Updated: 2024/04/27 09:04:29 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	ft_lextrim(t_system *systm)
 		systm->lexer = systm->lexer->next;
 	while (current)
 	{
-		if (current->str)
+		if (current->str && !current->token)
 		{
 			tmp = ft_strtrim(current->str, "\t\n ");
 			if (!tmp)
@@ -150,9 +150,9 @@ void	ft_lexer(t_system	*systm)
 			add_lexer(systm, handle_word(systm, &i), 0);
 		i++;
 	}
+	ft_lextrim(systm);
 	expander(systm);
 	join_words(systm);
-	ft_lextrim(systm);
 }
 
 /*
@@ -169,7 +169,7 @@ int	main(void)
 
 	systm.env = env;
 	systm.status = 4210;
-	systm.prompt = "test rtyui | yrt twe wert tre | 53 6543 -5";
+	systm.prompt = "test rtyui | yrt twe wert\' tre\' | 53 6543 -5";
 	i = 0;
 	systm.lexer = NULL;
 	if (quotes_by_pair(systm.prompt))
