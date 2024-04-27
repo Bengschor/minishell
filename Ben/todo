@@ -1,0 +1,4 @@
+
+- norm
+- proteger TOUS les mallocs
+- leaks a la fin

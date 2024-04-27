@@ -1,0 +1,100 @@
+LEXER
+flowchart TD
+
+    subgraph "ft_lexer" 
+        start[Start] --> loop((Loop over prompt string))
+        loop --> |Character == SQUOTE| handleSquote[handle_quote]
+        loop --> |Character == DQUOTE| handleDquote[handle_quote]
+        loop --> |Character == PIPE or INTO or OUTTO| handleToken[handle_token]
+        loop --> |Otherwise| handleWord[handle_word]
+        handleSquote --> addLexer
+        handleDquote --> addLexer
+        handleToken --> addLexer
+        handleWord --> addLexer
+        addLexer --> handleExpander[expander]
+        handleExpander --> joinWords[join_words]
+        joinWords --> trimNodes[ft_lextrim]
+        trimNodes --> endNode[End]
+    end
+
+    classDef blue fill:#bbf,stroke:#333,stroke-width:2px;
+    classDef green fill:#9f9,stroke:#333,stroke-width:2px;
+    classDef yellow fill:#ff9,stroke:#333,stroke-width:2px;
+    classDef orange fill:#ffa,stroke:#333,stroke-width:2px;
+
+    class loop green;
+
+expander
+flowchart TD
+
+    subgraph "Expander" 
+        start[Start] --> loop((Loop over lexer nodes))
+        loop --> |Node has string content| checkToken[Check token]
+        checkToken --> |Token is double quote or null| expandStr[expand_str]
+        expandStr --> |Expanding string| checkNextChar[Check next character]
+        checkNextChar --> |Next character is end of string| joinWords[join_words]
+        checkNextChar --> |Next character is not end of string| checkToken
+        checkToken --> |Token is not double quote or null| endLoop[End Loop]
+        endLoop[End Loop]
+    end
+
+    classDef blue fill:#bbf,stroke:#333,stroke-width:2px;
+    classDef green fill:#9f9,stroke:#333,stroke-width:2px;
+    classDef yellow fill:#ff9,stroke:#333,stroke-width:2px;
+    classDef orange fill:#ffa,stroke:#333,stroke-width:2px;
+
+    class loop green;
+
+syntax
+flowchart TD
+
+    subgraph "Syntax Checker" 
+        start[Start] --> checkPipe[Check for pipe at start]
+        checkPipe --> |Pipe found| pipeError[Print pipe error]
+        checkPipe --> |No pipe found| loop((Loop over lexer nodes))
+        loop --> |Check for consecutive tokens| checkConsecutive[Check consecutive tokens]
+        checkConsecutive --> |Consecutive tokens found| consecutiveError[Print consecutive tokens error]
+        checkConsecutive --> |No consecutive tokens found| checkTokenPair[Check token pair]
+        checkTokenPair --> |Equal tokens found| equalTokenError[Print equal tokens error]
+        checkTokenPair --> |Sharp or equal tokens found| sharpEqualError[Print sharp equal tokens error]
+        checkTokenPair --> |No sharp or equal tokens found| checkLast[Check last token]
+        checkLast --> |Last token is a redirection| lastRedirectionError[Print last redirection error]
+        checkLast --> |Last token is not a redirection | finished
+    end
+
+    classDef blue fill:#bbf,stroke:#333,stroke-width:2px;
+    classDef green fill:#9f9,stroke:#333,stroke-width:2px;
+    classDef yellow fill:#ff9,stroke:#333,stroke-width:2px;
+    classDef orange fill:#ffa,stroke:#333,stroke-width:2px;
+
+    class loop green;
+
+PARSING
+flowchart TD
+
+    subgraph "Parsing" 
+        start[Start] --> countPipes[Count Pipes]
+        countPipes --> |Number of Pipes| initParser[Initialize Parser]
+        initParser --> |Index i| formatExec[Format Exec]
+        formatExec --> loop(Iterate Over Lexer)
+        loop --> |Next Token| checkToken[Check Token]
+        checkToken --> |Redirect| handleRedirect[Handle Redirect]
+        checkToken --> |Heredoc| handleHeredoc[Handle Heredoc]
+        checkToken --> |Otherwise| addWord[Add Word]
+        handleRedirect --> |Open File| redirect[Redirect]
+        handleHeredoc --> |Fork| heredoc[Heredoc]
+        heredoc --> |Child Process| getStrings[Get Strings]
+        getStrings --> |Read String| writePipe[Write Pipe]
+        writePipe --> |Until Key Entered| getStrings
+        getStrings --> |Key Entered| closePipe[Close Pipe]
+        closePipe --> |Parent Process| handleStrings[Handle Strings]
+        handleStrings --> |Close File Descriptor| closeFD[Close FD]
+        closeFD --> finish
+        checkToken --> loop
+    end
+
+    classDef green fill:#9f9,stroke:#333,stroke-width:2px;
+    class Parsing green;
+
+    classDef blue fill:#bbf,stroke:#333,stroke-width:2px;
+    class Heredoc blue;
