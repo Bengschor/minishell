@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:55:46 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/27 15:32:26 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/09 12:22:15 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,51 +154,4 @@ void	ft_lexer(t_system	*systm)
 	expander(systm);
 	join_words(systm);
 	ft_lextrim(systm);
-}
-
-/*
-main to test my part
-*/
-int	main(void)
-{
-	t_system	systm;
-	t_lexer		*current;
-	t_parser	*tcurrent;
-	int			i;
-	int			j = 0;
-	char		*env[] = {"test1=Ben", "test2=WAs", NULL};
-
-	systm.env = env;
-	systm.status = 4210;
-	systm.prompt = "test rtyui |  | 53 6543 -5";
-	i = 0;
-	systm.lexer = NULL;
-	if (quotes_by_pair(systm.prompt))
-		return (printf("not interpreting unclosed quotes\n"));
-	ft_lexer(&systm);
-	if (systm.lexer && check_syntax(&systm))
-		return (1);
-	ft_parser(&systm);
-	current = systm.lexer;
-	printf("\nLEXER:\n");
-	while (current)
-	{
-		printf("%c, |%s|\n", current->token, current->str);
-		current = current->next;
-	}
-	tcurrent = systm.parser;
-	printf("\nPARSER:\n");
-	while (tcurrent[j].strs)
-	{
-		while (tcurrent[j].strs[i])
-		{
-			printf("%s|", tcurrent[j].strs[i]);
-			i++;
-		}
-		i = 0;
-		printf("\ninto: %d\noutto: %d\n", tcurrent[j].infile, tcurrent[j].outfile);
-		j++;
-	}
-	ft_crash(&systm);
-	return (0);
 }
