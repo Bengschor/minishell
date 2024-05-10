@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:47:11 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/26 15:50:23 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/10 12:40:22 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,12 @@ void	ft_crash(t_system *systm)
 	j = -1;
 	if (systm->lexer)
 		free_lexer(find_first(systm->lexer));
+	systm->lexer = NULL;
 	if (systm->parser)
 	{
 		while (systm->parser[++j].strs)
 			free_strs(systm->parser[j].strs);
 		free(systm->parser);
 	}
+	systm->parser = NULL;
 }

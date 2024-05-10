@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:08:21 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/25 14:26:03 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/10 13:17:14 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	ft_isallspace(char *str)
 
 	i = 0;
 	if (!str)
+		return (1);
+	if (!str[i])
 		return (1);
 	while (str[i])
 	{

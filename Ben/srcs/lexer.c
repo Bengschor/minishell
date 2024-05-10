@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:55:46 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/09 12:22:15 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/10 14:27:40 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ int	ft_lextrim(t_system *systm)
 			free(current->str);
 			current->str = tmp;
 		}
-		if (!current->token && ft_isallspace(current->str))
+		if ((!current->token || current->token == DQUOTE
+				|| current->token == SQUOTE) && ft_isallspace(current->str))
 			del_node(&current);
 		else
 			current = current->next;

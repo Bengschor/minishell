@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:48:24 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/27 15:32:53 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/10 12:36:44 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int	add_word(t_system *systm, int exec_i)
 {
 	char	**tmp;
 
-	printf("add_word exec_i:%d\n", exec_i);
 	tmp = ft_addstr(systm->parser[exec_i].strs, systm->lexer->str);
 	if (!tmp)
 		return (ft_crash(systm), 1);

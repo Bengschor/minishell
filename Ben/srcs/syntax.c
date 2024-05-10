@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:08:23 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/27 15:34:34 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/10 13:12:25 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,21 @@ int	quotes_by_pair(char *str)
 	i = 0;
 	while (str[i])
 	{
+		if ((str[i] == SQUOTE || str[i] == DQUOTE) && !str[i + 1])
+			return (printf("not interpreting unclosed quotes\n"));
 		if (str[i] == SQUOTE)
 		{
 			while (str[++i] && str[i] != SQUOTE)
 				;
 			if (!str[i] && str[i - 1] != SQUOTE)
-				return (EXIT_FAILURE);
+				return (printf("not interpreting unclosed quotes\n"));
 		}
 		if (str[i] == DQUOTE)
 		{
 			while (str[++i] && str[i] != DQUOTE)
 				;
 			if (!str[i] && str[i - 1] != DQUOTE)
-				return (EXIT_FAILURE);
+				return (printf("not interpreting unclosed quotes\n"));
 		}
 		i++;
 	}

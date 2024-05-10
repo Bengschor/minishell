@@ -6,7 +6,7 @@
 #    By: bschor <bschor@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/13 16:15:18 by bschor            #+#    #+#              #
-#    Updated: 2024/04/26 16:20:44 by bschor           ###   ########.fr        #
+#    Updated: 2024/05/10 12:32:56 by bschor           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRC		=	lexer.c \
 			parser.c \
 			parser_utils.c \
 			heredoc.c \
-			syntax_utils.c
+			syntax_utils.c \
+			main.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 

@@ -6,41 +6,21 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 12:21:05 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/09 12:41:56 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/10 14:30:15 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-int	main(void)
+static int	print_res(t_system *systm)
 {
-	t_system	systm;
-	t_lexer		*current;
 	t_parser	*tcurrent;
 	int			i;
-	int			j = 0;
-	char		*env[] = {"test1=Ben", "test2=WAs", NULL};
+	int			j;
 
-	systm.env = env;
-	systm.status = 4210;
-	systm.prompt = "test rtyui |  53 65 -5 << test";
 	i = 0;
-	systm.lexer = NULL;
-	if (quotes_by_pair(systm.prompt))
-		return (printf("not interpreting unclosed quotes\n"));
-	ft_lexer(&systm);
-	if (systm.lexer && check_syntax(&systm))
-		return (1);
-	ft_parser(&systm);
-	current = systm.lexer;
-	printf("\nLEXER:\n");
-	while (current)
-	{
-		printf("%c, |%s|\n", current->token, current->str);
-		current = current->next;
-	}
-	tcurrent = systm.parser;
-	printf("\nPARSER:\n");
+	j = 0;
+	tcurrent = systm->parser;
 	while (tcurrent[j].strs)
 	{
 		while (tcurrent[j].strs[i])
@@ -49,10 +29,10 @@ int	main(void)
 			i++;
 		}
 		i = 0;
-		printf("\ninto: %d\noutto: %d\n", tcurrent[j].infile, tcurrent[j].outfile);
+		printf("\ninto: %d\noutto: %d\n", tcurrent[j].infile,
+			tcurrent[j].outfile);
 		j++;
 	}
-	ft_crash(&systm);
 	return (0);
 }
 
@@ -60,19 +40,26 @@ static char	*get_prompt(char *str)
 {
 	char	*prompt;
 
-    prompt = readline(str);
-    if (!*prompt)
-        return (prompt);
-    add_history(prompt);
-    return (prompt);
+	prompt = readline(str);
+	if (!*prompt)
+		return (prompt);
+	add_history(prompt);
+	return (prompt);
 }
 
-static int	minishell_loop(t_systm *systm)
+static int	minishell_loop(t_system *systm)
 {
 	while (1)
 	{
+		ft_crash(systm);
 		systm->prompt = get_prompt("minishell$ ");
-
+		if (quotes_by_pair(systm->prompt))
+			continue ;
+		ft_lexer(systm);
+		if (systm->lexer && check_syntax(systm))
+			continue ;
+		ft_parser(systm);
+		print_res(systm);
 	}
 }
 
@@ -80,9 +67,11 @@ int	main(int argc, char **argv, char *envp[])
 {
 	t_system	systm;
 
-	if (argc != 1)
+	if (argc != 1 || argv[1])
 		printf("program arguments are not interpreted\n");
 	systm.env = envp;
+	systm.lexer = NULL;
+	systm.parser = NULL;
 	minishell_loop(&systm);
-	
+	ft_crash(&systm);
 }

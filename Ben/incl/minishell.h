@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:46 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/27 15:30:05 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/10 14:27:30 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ char	*handle_word(t_system *systm, int *i);
 int		handle_token(t_system *systm, int *i);
 int		ft_nodjoin(t_lexer *first, t_lexer *second);
 void	del_node(t_lexer **node);
+
+// lexer.c
+void	ft_lexer(t_system	*systm);
 
 // syntax.c
 int		quotes_by_pair(char *str);
