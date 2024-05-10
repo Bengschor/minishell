@@ -1,5 +1,12 @@
-
-- norm
+BEN:
 - gerer les signaux dans le heredoc
 - proteger TOUS les mallocs
 - leaks a la fin
+
+GLOBAL:
+- Search and launch the right executable (based on the PATH variable or using a
+relative or an absolute path)
+- exec (search path, redirect, pipex)
+- change the $?
+- signals (interactive and normal)
+- 
