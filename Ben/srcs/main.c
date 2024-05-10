@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 12:21:05 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/10 14:30:15 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/10 15:50:59 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static int	minishell_loop(t_system *systm)
 	{
 		ft_crash(systm);
 		systm->prompt = get_prompt("minishell$ ");
+		if (!ft_strncmp(systm->prompt, "exit", 4))
+			break ;
 		if (quotes_by_pair(systm->prompt))
 			continue ;
 		ft_lexer(systm);
@@ -61,6 +63,7 @@ static int	minishell_loop(t_system *systm)
 		ft_parser(systm);
 		print_res(systm);
 	}
+	return (0);
 }
 
 int	main(int argc, char **argv, char *envp[])
@@ -73,5 +76,6 @@ int	main(int argc, char **argv, char *envp[])
 	systm.lexer = NULL;
 	systm.parser = NULL;
 	minishell_loop(&systm);
+	clear_history();
 	ft_crash(&systm);
 }
