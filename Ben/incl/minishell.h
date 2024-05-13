@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:46 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/10 14:27:30 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/13 14:31:17 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include "../libft/libft.h"
 # include <readline/readline.h>
+# include <term.h>
 
 # define TKNSTX "minishell: syntax error near unexpected token `%c'\n"
 # define TKNSSTX "minishell: syntax error near unexpected token `%s'\n"
@@ -107,5 +108,8 @@ void	free_strs(char **strs);
 
 // heredoc.c
 int		heredoc(t_system *systm, int exec_i);
+
+// signals.c
+int		init_termcap(void);
 
 #endif
