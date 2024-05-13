@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:46 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/13 14:31:17 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/13 14:37:03 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include "../libft/libft.h"
 # include <readline/readline.h>
+# include <curses.h>
 # include <term.h>
 
 # define TKNSTX "minishell: syntax error near unexpected token `%c'\n"

@@ -6,13 +6,15 @@
 #    By: bschor <bschor@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/13 16:15:18 by bschor            #+#    #+#              #
-#    Updated: 2024/05/13 14:24:45 by bschor           ###   ########.fr        #
+#    Updated: 2024/05/13 15:04:26 by bschor           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
 
-RL		= -lreadline -L /opt/homebrew/opt/readline/lib -I /opt/homebrew/opt/readline/include
+RL		= -ltermcap -lreadline -L ~/homebrew/opt/readline/lib -I /opt/homebrew/opt/readline/include
+
+# TERMCAP	= -lncurses -L ~/homebrew/opt/ncurses/lib -I /opt/homebrew/opt/ncurses/include /opt/homebrew/opt/ncurses/bin/*
 
 # src / obj files
 SRC		=	lexer.c \

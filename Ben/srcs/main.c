@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 12:21:05 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/13 14:24:35 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/13 16:21:32 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ static char	*get_prompt(char *str, t_system *systm)
 	prompt = readline(str);
 	if (!prompt)
 	{
-		char *cl_cap = tigetstr("cr");
-		tputs (cl_cap, 1, putchar);
+		printf("\x1b[Aminishell$ exit\n");
 		systm->status = 1;
 		return (NULL);
 	}
@@ -82,7 +81,7 @@ int	main(int argc, char **argv, char *envp[])
 	systm.env = envp;
 	systm.lexer = NULL;
 	systm.parser = NULL;
-	init_termcap();
+	// init_termcap();
 	minishell_loop(&systm);
 	clear_history();
 	ft_crash(&systm);
