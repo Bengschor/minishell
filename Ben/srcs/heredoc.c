@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:14:11 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/13 20:10:54 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/14 14:51:32 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static int	get_strings(t_system *systm, char *key, int p[2], int heredoc_type)
 			expand_str(&buffer, systm);
 		ft_putstr_fd(buffer, p[1]);
 		free(buffer);
-		// rl_on_new_line();
 		buffer = readline(">");
 		if (!buffer)
 			return (printf("\x1b[1A> "), close(p[1]), ft_crash(systm), 1);
@@ -105,6 +104,7 @@ int	heredoc(t_system *systm, int exec_i)
 		return (ft_crash(systm), 1);
 	if (pid == 0)
 	{
+		signal(SIGINT, (void (*)(int))1);
 		get_strings(systm, systm->lexer->str, p, heredoc_type);
 		exit(0);
 	}

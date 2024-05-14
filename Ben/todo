@@ -1,13 +1,17 @@
 BEN:
-- gerer les signaux dans le heredoc
-- gerer ctrl \ + c
+- gerer ctrl d heredoc sans le \n
+- last token is pipe
 - proteger TOUS les mallocs
-- leaks a la fin
+- leaks a la fin (readline)
 
 GLOBAL:
 - Search and launch the right executable (based on the PATH variable or using a
 relative or an absolute path)
 - exec (search path, redirect, pipex)
 - change the $?
-- signals (interactive and normal)
+- signals (during the execution)
 - 
+
+PROBLEMS (different than bash):
+- ctrl -D in heredoc
+- ctrl -C in last_pipe

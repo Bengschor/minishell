@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 12:21:05 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/13 20:10:50 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/14 16:45:47 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static char	*get_prompt(char *str, t_system *systm)
 	}
 	if (!*prompt)
 		return (prompt);
-	add_history(prompt);
 	return (prompt);
 }
 
@@ -59,10 +58,14 @@ static int	minishell_loop(t_system *systm)
 	{
 		ft_crash(systm);
 		systm->prompt = get_prompt("minishell$ ", systm);
-		if (!systm->prompt || !ft_strncmp(systm->prompt, "exit", 4))
+		if (!systm->prompt)
 			break ;
-		if (quotes_by_pair(systm->prompt))
+		if (quotes_by_pair(systm->prompt, systm) || systm->prompt[0] == '\0')
 			continue ;
+		if (finish_by_pipe(systm->prompt))
+			if (last_pipe(systm))
+				continue ;
+		add_history(systm->prompt);
 		ft_lexer(systm);
 		if (systm->lexer && check_syntax(systm))
 			continue ;
@@ -82,6 +85,9 @@ int	main(int argc, char **argv, char *envp[])
 	systm.lexer = NULL;
 	systm.parser = NULL;
 	// init_termcap();
+	ft_suppress_output();
+	signal(SIGINT, new_prompt);
+	signal(SIGQUIT, (void (*)(int))1);
 	minishell_loop(&systm);
 	clear_history();
 	ft_crash(&systm);

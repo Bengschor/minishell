@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:46 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/13 14:37:03 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/14 16:29:36 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <readline/readline.h>
 # include <curses.h>
 # include <term.h>
+# include <termios.h>
+# include <signal.h>
 
 # define TKNSTX "minishell: syntax error near unexpected token `%c'\n"
 # define TKNSSTX "minishell: syntax error near unexpected token `%s'\n"
@@ -83,8 +85,10 @@ void	del_node(t_lexer **node);
 void	ft_lexer(t_system	*systm);
 
 // syntax.c
-int		quotes_by_pair(char *str);
+int		quotes_by_pair(char *str, t_system *systm);
 int		check_syntax(t_system *systm);
+int		finish_by_pipe(char *str);
+int		last_pipe(t_system *systm);
 
 // syntax_utils.c
 char	*tkntostr(int token);
@@ -112,5 +116,10 @@ int		heredoc(t_system *systm, int exec_i);
 
 // signals.c
 int		init_termcap(void);
+void    ft_suppress_output(void);
+void	new_prompt(int signal);
+
+// readline
+void 	rl_replace_line (const char *, int);
 
 #endif

@@ -6,11 +6,45 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:08:23 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/10 13:12:25 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/14 16:42:44 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
+
+int	last_pipe(t_system *systm)
+{
+	char	*tmp_prompt;
+
+	tmp_prompt = readline("> ");
+	if (!tmp_prompt)
+		return (add_history(systm->prompt), printf("\x1b[1A\x1b[2Cminishell: syntax error: unexpected end of file\n"));
+	else if (tmp_prompt[0] != '\0')
+		tmp_prompt = ft_strjoin_free(ft_strdup(" "), tmp_prompt);
+	systm->prompt = ft_strjoin_free(systm->prompt, tmp_prompt);
+	while (ft_isallspace(tmp_prompt))
+	{
+		tmp_prompt = readline("> ");
+		if (!tmp_prompt)
+			return (add_history(systm->prompt), printf("\x1b[1A\x1b[2Cminishell: syntax error: unexpected end of file\n"));
+		else if (tmp_prompt[0] != '\0')
+			tmp_prompt = ft_strjoin_free(ft_strdup(" "), tmp_prompt);
+		systm->prompt = ft_strjoin_free(systm->prompt, tmp_prompt);
+	}
+	return (0);
+}
+
+int	finish_by_pipe(char *str)
+{
+	int	i;
+
+	i = ft_strlen(str);
+	while (i > 0 && ft_isspace(str[i]))
+		i--;
+	if (str[i] == '|')
+		return (1);
+	return (0);
+}
 /**
  * @brief Checks if quotes in the string occur in pairs.
  * 
@@ -27,7 +61,7 @@
  * 19: Return EXIT_SUCCESS if all quotes occur in pairs, EXIT_FAILURE
  * otherwise.
  */
-int	quotes_by_pair(char *str)
+int	quotes_by_pair(char *str, t_system *systm)
 {
 	int	i;
 
@@ -35,44 +69,24 @@ int	quotes_by_pair(char *str)
 	while (str[i])
 	{
 		if ((str[i] == SQUOTE || str[i] == DQUOTE) && !str[i + 1])
-			return (printf("not interpreting unclosed quotes\n"));
+			return (add_history(systm->prompt), printf("not interpreting unclosed quotes\n"));
 		if (str[i] == SQUOTE)
 		{
 			while (str[++i] && str[i] != SQUOTE)
 				;
 			if (!str[i] && str[i - 1] != SQUOTE)
-				return (printf("not interpreting unclosed quotes\n"));
+				return (add_history(systm->prompt), printf("not interpreting unclosed quotes\n"));
 		}
 		if (str[i] == DQUOTE)
 		{
 			while (str[++i] && str[i] != DQUOTE)
 				;
 			if (!str[i] && str[i - 1] != DQUOTE)
-				return (printf("not interpreting unclosed quotes\n"));
+				return (add_history(systm->prompt), printf("not interpreting unclosed quotes\n"));
 		}
 		i++;
 	}
 	return (EXIT_SUCCESS);
-}
-
-/**
- * @brief Checks if the last token in the lexer linked list is a valid
- * syntax.
- * 
- * @param last A pointer to the last node in the lexer linked list.
- * @return 0 if the syntax is valid, a non-zero value otherwise.
- * @line by line:
- * 1-6: Check if the last token is a special syntax token (HERED, APPEND,
- * INTO, OUTTO),
- *      and return an error message if it is.
- * 7: Return 0 if the syntax is valid.
- */
-static int	check_syntax_last(t_lexer *last)
-{
-	if (last->token == HERED || last->token == APPEND || last->token == INTO
-		|| last->token == OUTTO)
-		return (printf(NLSTX));
-	return (0);
 }
 
 /**
@@ -85,26 +99,29 @@ static int	check_syntax_last(t_lexer *last)
  	identical tokens.
  * 7-9: Check if the last token is a valid syntax token.
  * 10-12: Return an error message if the syntax is invalid.
+ * 12-15: Check if the last token is a special syntax token (HERED, APPEND,
+ * INTO, OUTTO), and return an error message if it is.
  * 13: Return 0 if the syntax is valid.
  */
 int	check_syntax(t_system *systm)
 {
-	t_lexer	*current;
+	t_lexer	*cur;
 
-	current = systm->lexer;
-	if (current->token == PIPE)
-		return (printf(TKNSTX, current->token));
-	while (current->next)
+	cur = systm->lexer;
+	if (cur->token == PIPE)
+		return (printf(TKNSTX, cur->token));
+	while (cur->next)
 	{
-		if (ft_strchr("<>|", current->token) && current->token
-			&& current->token == current->next->token)
-			return (printf(TKNSTX, current->token));
-		if (ft_strchr("#=", current->token) && current->token
-			&& current->token == current->next->token)
-			return (printf(TKNSSTX, tkntostr(current->token)));
-		current = current->next;
+		if (ft_strchr("<>|", cur->token) && cur->token
+			&& cur->token == cur->next->token)
+			return (printf(TKNSTX, cur->token));
+		if (ft_strchr("#=", cur->token) && cur->token
+			&& cur->token == cur->next->token)
+			return (printf(TKNSSTX, tkntostr(cur->token)));
+		cur = cur->next;
 	}
-	if (check_syntax_last(current))
-		return (1);
+	if (cur->token == HERED || cur->token == APPEND || cur->token == INTO
+		|| cur->token == OUTTO)
+		return (printf(NLSTX));
 	return (0);
 }
