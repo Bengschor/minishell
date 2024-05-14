@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 12:21:05 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/13 16:21:32 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/13 20:10:50 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	print_res(t_system *systm)
 static char	*get_prompt(char *str, t_system *systm)
 {
 	char	*prompt;
-
+	// rl_on_new_line();
 	prompt = readline(str);
 	if (!prompt)
 	{

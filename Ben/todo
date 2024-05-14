@@ -1,5 +1,6 @@
 BEN:
 - gerer les signaux dans le heredoc
+- gerer ctrl \ + c
 - proteger TOUS les mallocs
 - leaks a la fin
 
