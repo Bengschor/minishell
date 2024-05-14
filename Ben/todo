@@ -15,3 +15,4 @@ relative or an absolute path)
 PROBLEMS (different than bash):
 - ctrl -D in heredoc
 - ctrl -C in last_pipe
+- heredoc executes before last_pipe
