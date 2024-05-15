@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:46 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/14 16:29:36 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/15 18:23:41 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define TKNSTX "minishell: syntax error near unexpected token `%c'\n"
 # define TKNSSTX "minishell: syntax error near unexpected token `%s'\n"
 # define NLSTX "minishell: unexpected token `newline'\n"
+# define XOKACC "minishell: %s: Permission denied\n"
 
 /*
 tokens are written as their characters to make the conditions more readable
@@ -118,6 +119,11 @@ int		heredoc(t_system *systm, int exec_i);
 int		init_termcap(void);
 void    ft_suppress_output(void);
 void	new_prompt(int signal);
+
+// get_path.c
+char	*ft_strtok(char *str, char c, int nbr);
+char	*join_and_free(char *s1, char *s2);
+char	*check_path(char *cmd);
 
 // readline
 void 	rl_replace_line (const char *, int);
