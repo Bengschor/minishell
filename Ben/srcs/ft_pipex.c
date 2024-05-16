@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 08:55:35 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/16 13:22:08 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/16 13:53:40 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ void	ft_child(int fd[2], t_system *systm, int pars_i)
 	if (systm->parser[pars_i].infile < 0 || systm->parser[pars_i].outfile < 0)
 		exit (1);
 	execve(systm->parser[pars_i].path, systm->parser[pars_i].strs, systm->env);
-	// exit (1);
+	exit (1);
 }
 
 int	ft_parent(int fd[2], t_system *systm, int pars_i)
 {
 	//signal
+	close(fd[1]);
 	if (systm->parser[pars_i + 1].infile < 2)
 		dup2(fd[0], STDIN_FILENO);
-	close(fd[1]);
 	close(fd[0]);
 	return (0);
 }

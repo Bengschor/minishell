@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:20:39 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/16 13:12:09 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/16 13:55:43 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int	execution(t_system *systm)
 		ft_pipex(systm, i, stdout2);
 		i++;
 	}
-	dup2(STDOUT_FILENO, stdout2);
-	dup2(STDIN_FILENO, stdin2);
+	dup2(stdout2, STDOUT_FILENO);
+	dup2(stdin2, STDIN_FILENO);
 	close(stdout2);
 	close(stdin2);
 	waitpid(systm->pid, &(systm->status), 0);

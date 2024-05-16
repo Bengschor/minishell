@@ -6,37 +6,37 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 12:21:05 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/16 13:22:24 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/16 13:57:59 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-static int	print_res(t_system *systm)
-{
-	t_parser	*tcurrent;
-	int			i;
-	int			j;
+// static int	print_res(t_system *systm)
+// {
+// 	t_parser	*tcurrent;
+// 	int			i;
+// 	int			j;
 
-	i = 0;
-	j = 0;
-	tcurrent = systm->parser;
-	printf("--------parsing results--------\n");
-	while (tcurrent[j].strs)
-	{
-		while (tcurrent[j].strs[i])
-		{
-			printf("%s|", tcurrent[j].strs[i]);
-			i++;
-		}
-		i = 0;
-		printf("\nfull_path: %s\n", tcurrent[j].path);
-		printf("into: %d\noutto: %d\n", tcurrent[j].infile,
-			tcurrent[j].outfile);
-		j++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	j = 0;
+// 	tcurrent = systm->parser;
+// 	printf("--------parsing results--------\n");
+// 	while (tcurrent[j].strs)
+// 	{
+// 		while (tcurrent[j].strs[i])
+// 		{
+// 			printf("%s|", tcurrent[j].strs[i]);
+// 			i++;
+// 		}
+// 		i = 0;
+// 		printf("\nfull_path: %s\n", tcurrent[j].path);
+// 		printf("into: %d\noutto: %d\n", tcurrent[j].infile,
+// 			tcurrent[j].outfile);
+// 		j++;
+// 	}
+// 	return (0);
+// }
 
 static void	ft_reset_loop(t_system *systm)
 {
@@ -57,8 +57,6 @@ static char	*get_prompt(char *str, t_system *systm)
 		systm->status = 1;
 		return (NULL);
 	}
-	if (!*prompt)
-		return (prompt);
 	return (prompt);
 }
 
@@ -81,7 +79,7 @@ static int	minishell_loop(t_system *systm)
 			continue ;
 		ft_parser(systm);
 		execution(systm);
-		print_res(systm);
+		// print_res(systm);
 	}
 	return (0);
 }
@@ -91,7 +89,7 @@ int	main(int argc, char **argv, char *envp[])
 	t_system	systm;
 
 	if (argc != 1 || argv[1])
-		printf("program arguments are not interpreted\n");
+		return (printf("program arguments are not interpreted\n"), 0);
 	systm.env = envp;
 	systm.lexer = NULL;
 	systm.parser = NULL;
