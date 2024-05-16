@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:00:21 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/16 11:11:40 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/16 18:08:24 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ char *get_path(char *cmd, t_system *systm)
     int i;
 
     i = 1;
+    if (is_builtins(cmd))
+        return (ft_strdup(cmd));
     path = getenv("PATH");
     path_token = ft_strtok(path, ':', i, systm);
 	full_path = NULL;
@@ -72,8 +74,6 @@ char *get_path(char *cmd, t_system *systm)
     {
     	full_path = join_and_free(path_token, "/", systm);
     	full_path = join_and_free(full_path, cmd, systm);
-    	// if (access(full_path, F_OK))
-		// 	return (printf("minishell: %s: command not found\n", cmd), NULL);
 		if (!access(full_path, F_OK | X_OK))
 			return (full_path);
 		else if (access(full_path, F_OK) && !access(full_path, X_OK))

@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:46 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/16 13:11:52 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/16 18:16:43 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define TKNSSTX "minishell: syntax error near unexpected token `%s'\n"
 # define NLSTX "minishell: unexpected token `newline'\n"
 # define XOKACC "minishell: %s: Permission denied\n"
+
 
 /*
 tokens are written as their characters to make the conditions more readable
@@ -71,6 +72,33 @@ typedef struct s_system
 	t_parser	*parser;
 	int			status;
 }	t_system;
+
+// builtins.c
+int do_echo(int argc, char **argv);
+int do_cd(const char *path, t_system *systm) ;
+int do_pwd(int argc);
+int do_env(int argc, char **env);
+int do_exit();
+
+// builtins_utils.c
+void ch_oldpwd();
+int	if_same_word(char *s1, char *s2);
+int if_blank(char c);
+char **ft_split_in_2(char *str);
+int if_key(char *str, char *var);
+int ft_setenv(char *key, char *value, char ***env);
+
+// command.c
+int is_builtins(char *cmd);
+int get_argc(char **strs);
+int do_builtins(t_system *systm, char **argv);
+
+// export_unset.c
+int get_pos(char *env, char c);
+int if_in_env(char *var, char **env);
+// int do_unset(char **tab, int argc, char **env);
+int get_res(char *str);
+int do_export(int argc, char **tabb, char ***env);
 
 // free.c
 void	ft_crash(t_system *systm);
@@ -118,10 +146,11 @@ void	free_strs(char **strs);
 int		heredoc(t_system *systm, int exec_i);
 
 // signals.c
-int		init_termcap(void);
+void	print_nl(int signal);
 void    ft_suppress_output(void);
 void	new_prompt(int signal);
 void    ft_include_output(void);
+void	ft_handle_sigquit(int signal);
 
 // get_path.c
 char	*ft_strtok(char *str, char c, int nbr, t_system *systm);

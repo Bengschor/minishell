@@ -6,7 +6,7 @@
 #    By: bschor <bschor@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/13 16:15:18 by bschor            #+#    #+#              #
-#    Updated: 2024/05/16 10:23:12 by bschor           ###   ########.fr        #
+#    Updated: 2024/05/16 18:16:50 by bschor           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,11 @@ SRC		=	lexer.c \
 			main.c \
 			ft_pipex.c \
 			exec.c \
-			get_path.c
+			get_path.c \
+			builtins.c \
+			builtins_utils.c \
+			command.c \
+			export_unset.c \
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
