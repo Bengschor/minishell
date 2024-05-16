@@ -6,28 +6,46 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:20:39 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/15 18:36:48 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/16 13:12:09 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-int	execution(t_system *systm)
+void	ft_wait_all(t_system *systm)
 {
-	int	stdin;
-	int	stdout;
-	int	i;
+	int i;
 
-	stdin = dup(STDIN_FILENO);
-	stdout = dup(STDOUT_FILENO);
+	i = 0;
 	while (systm->parser[i].strs)
 	{
-		systm->parser[i].path = get_path(systm, i);
-		if (!systm->parser[i].path)
-			return (EXIT_FAILURE); // fac | echo test ET echo test | fac pas le meme resultat
-		ft_pipex(systm, i);
+		wait(NULL);
 		i++;
 	}
+}
+
+int	execution(t_system *systm)
+{
+	int	stdin2;
+	int	stdout2;
+	int	i;
+
+	i = 0;
+	stdin2 = dup(STDIN_FILENO);
+	stdout2 = dup(STDOUT_FILENO);
+	while (systm->parser[i].strs)
+	{
+		systm->parser[i].path = get_path(systm->parser[i].strs[0], systm);
+		ft_pipex(systm, i, stdout2);
+		i++;
+	}
+	dup2(STDOUT_FILENO, stdout2);
+	dup2(STDIN_FILENO, stdin2);
+	close(stdout2);
+	close(stdin2);
 	waitpid(systm->pid, &(systm->status), 0);
-	
+	// ft_suppress_output();
+	// glbl signal
+	ft_wait_all(systm);
+	return (0);
 }

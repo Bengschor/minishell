@@ -6,7 +6,7 @@
 #    By: bschor <bschor@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/13 16:15:18 by bschor            #+#    #+#              #
-#    Updated: 2024/05/14 14:39:24 by bschor           ###   ########.fr        #
+#    Updated: 2024/05/16 10:23:12 by bschor           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ RL		= -ltermcap -lreadline -L ~/homebrew/opt/readline/lib -I /opt/homebrew/opt/r
 # src / obj files
 SRC		=	lexer.c \
 			lexer_utils.c \
-			crash.c \
+			free.c \
 			expander.c \
 			expander_utils.c \
 			syntax.c \
@@ -29,6 +29,9 @@ SRC		=	lexer.c \
 			syntax_utils.c \
 			signals.c \
 			main.c \
+			ft_pipex.c \
+			exec.c \
+			get_path.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 

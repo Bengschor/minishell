@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:46 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/15 18:23:41 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/16 13:11:52 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,15 @@ typedef struct s_system
 	char		**env;
 	char		**tmp;
 	t_lexer		*lexer;
+	int			pid;
 	t_parser	*parser;
 	int			status;
 }	t_system;
 
-// crash.c
+// free.c
 void	ft_crash(t_system *systm);
 t_lexer	*find_first(t_lexer *node);
+void	ft_free_systm(t_system *systm);
 
 // lexer_utils.c
 char	*handle_quote(t_system *systm, int *i);
@@ -119,11 +121,18 @@ int		heredoc(t_system *systm, int exec_i);
 int		init_termcap(void);
 void    ft_suppress_output(void);
 void	new_prompt(int signal);
+void    ft_include_output(void);
 
 // get_path.c
-char	*ft_strtok(char *str, char c, int nbr);
-char	*join_and_free(char *s1, char *s2);
-char	*check_path(char *cmd);
+char	*ft_strtok(char *str, char c, int nbr, t_system *systm);
+char	*join_and_free(char *s1, char *s2, t_system *systm);
+char 	*get_path(char *cmd, t_system *systm);
+
+// ft_pipex.c
+int		ft_pipex(t_system *systm, int pars_i, int stdout);
+
+// exec.c
+int		execution(t_system *systm);
 
 // readline
 void 	rl_replace_line (const char *, int);

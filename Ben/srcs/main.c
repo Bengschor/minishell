@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 12:21:05 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/14 16:45:47 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/16 13:22:24 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int	print_res(t_system *systm)
 	i = 0;
 	j = 0;
 	tcurrent = systm->parser;
+	printf("--------parsing results--------\n");
 	while (tcurrent[j].strs)
 	{
 		while (tcurrent[j].strs[i])
@@ -29,11 +30,20 @@ static int	print_res(t_system *systm)
 			i++;
 		}
 		i = 0;
-		printf("\ninto: %d\noutto: %d\n", tcurrent[j].infile,
+		printf("\nfull_path: %s\n", tcurrent[j].path);
+		printf("into: %d\noutto: %d\n", tcurrent[j].infile,
 			tcurrent[j].outfile);
 		j++;
 	}
 	return (0);
+}
+
+static void	ft_reset_loop(t_system *systm)
+{
+	ft_free_systm(systm);
+	// rl_replace_line("", 0);
+	// rl_on_new_line();
+	// rl_redisplay();
 }
 
 static char	*get_prompt(char *str, t_system *systm)
@@ -56,7 +66,7 @@ static int	minishell_loop(t_system *systm)
 {
 	while (1)
 	{
-		ft_crash(systm);
+		ft_reset_loop(systm);
 		systm->prompt = get_prompt("minishell$ ", systm);
 		if (!systm->prompt)
 			break ;
@@ -70,6 +80,7 @@ static int	minishell_loop(t_system *systm)
 		if (systm->lexer && check_syntax(systm))
 			continue ;
 		ft_parser(systm);
+		execution(systm);
 		print_res(systm);
 	}
 	return (0);

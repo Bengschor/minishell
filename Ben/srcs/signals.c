@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:15:25 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/14 10:13:30 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/16 08:53:53 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,17 @@ void    ft_suppress_output(void)
     if (tcgetattr(0, &new_settings))
         perror("minishell: tcsetattr");
     new_settings.c_lflag &= ~ECHOCTL;
+    if (tcsetattr(0, 0, &new_settings))
+        perror("minishell: tcsetattr");
+}
+
+void    ft_include_output(void)
+{
+    struct termios    new_settings;
+
+    if (tcgetattr(0, &new_settings))
+        perror("minishell: tcsetattr");
+    new_settings.c_lflag |= ECHOCTL;
     if (tcsetattr(0, 0, &new_settings))
         perror("minishell: tcsetattr");
 }

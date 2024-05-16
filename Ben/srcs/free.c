@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   crash.c                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:47:11 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/10 12:40:22 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/16 13:20:08 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_lexer(t_lexer *first)
 	}
 }
 
-void	ft_crash(t_system *systm)
+void	ft_free_systm(t_system *systm)
 {
 	int	j;
 
@@ -45,8 +45,17 @@ void	ft_crash(t_system *systm)
 	if (systm->parser)
 	{
 		while (systm->parser[++j].strs)
+		{
 			free_strs(systm->parser[j].strs);
+			free(systm->parser[j].path);
+		}
 		free(systm->parser);
 	}
 	systm->parser = NULL;
+}
+
+void	ft_crash(t_system *systm)
+{
+	ft_free_systm(systm);
+	exit (1);
 }
