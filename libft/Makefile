@@ -6,7 +6,7 @@
 #    By: bschor <bschor@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 12:42:45 by bschor            #+#    #+#              #
-#    Updated: 2024/04/26 09:55:32 by bschor           ###   ########.fr        #
+#    Updated: 2024/05/17 13:42:05 by bschor           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,8 @@ SRCS =		ft_isalpha.c \
 SRCS_PRINTF =	ft_itoa_printf.c \
 				ft_printf.c \
 				subfunctions.c \
+				ft_printf_err.c \
+				subfunctions_err.c \
 
 SRCS_B = 	ft_lstnew.c \
 			ft_lstadd_front.c \

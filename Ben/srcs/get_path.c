@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:00:21 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/16 18:08:24 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/17 13:58:45 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ char *get_path(char *cmd, t_system *systm)
 		if (!access(full_path, F_OK | X_OK))
 			return (full_path);
 		else if (access(full_path, F_OK) && !access(full_path, X_OK))
-			return (printf(XOKACC, full_path), NULL);
+			return (ft_printf_err(XOKACC, full_path), NULL);
     	i++;
     	path_token = ft_strtok(path, ':', i, systm);
     }
     free(full_path);
-    return (printf("minishell: %s: command not found\n", cmd), NULL);
+    return (ft_printf_err("minishell: %s: command not found\n", cmd), NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:14:11 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/16 17:07:24 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:41:48 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,17 @@ static int	get_strings(t_system *systm, char *key, int p[2], int heredoc_type)
 
 	buffer = readline("> ");
 	if (!buffer)
-		return (printf("\x1b[1A> "), close(p[1]), ft_crash(systm), 1);
+		return (close(p[1]), ft_crash(systm), 1);
 	while (ft_strcmp(buffer, key))
 	{
 		if (heredoc_type)
 			expand_str(&buffer, systm);
 		ft_putstr_fd(buffer, p[1]);
+		ft_putstr_fd("\n", p[1]);
 		free(buffer);
 		buffer = readline("> ");
 		if (!buffer)
-			return (printf("\x1b[1A> "), close(p[1]), ft_crash(systm), 1);
+			return (close(p[1]), ft_crash(systm), 1);
 	}
 	free(buffer);
 	close(p[0]);
@@ -69,7 +70,7 @@ static int	handle_strings(t_system *systm, int exec_i, int p[2])
 	close(p[1]);
 	if (systm->parser[exec_i].infile > 2)
 		close(systm->parser[exec_i].infile);
-	else
+	if (systm->parser[exec_i].infile >= 0)
 		systm->parser[exec_i].infile = p[0];
 	return (0);
 }

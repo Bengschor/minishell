@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:08:23 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/14 16:42:44 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/17 18:25:50 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	last_pipe(t_system *systm)
 
 	tmp_prompt = readline("> ");
 	if (!tmp_prompt)
-		return (add_history(systm->prompt), printf("\x1b[1A\x1b[2Cminishell: syntax error: unexpected end of file\n"));
+		return (add_history(systm->prompt), ft_printf_err("\x1b[1A\x1b[2Cminishell: syntax error: unexpected end of file\n"));
 	else if (tmp_prompt[0] != '\0')
 		tmp_prompt = ft_strjoin_free(ft_strdup(" "), tmp_prompt);
 	systm->prompt = ft_strjoin_free(systm->prompt, tmp_prompt);
@@ -26,7 +26,7 @@ int	last_pipe(t_system *systm)
 	{
 		tmp_prompt = readline("> ");
 		if (!tmp_prompt)
-			return (add_history(systm->prompt), printf("\x1b[1A\x1b[2Cminishell: syntax error: unexpected end of file\n"));
+			return (add_history(systm->prompt), ft_printf_err("\x1b[1A\x1b[2Cminishell: syntax error: unexpected end of file\n"));
 		else if (tmp_prompt[0] != '\0')
 			tmp_prompt = ft_strjoin_free(ft_strdup(" "), tmp_prompt);
 		systm->prompt = ft_strjoin_free(systm->prompt, tmp_prompt);
@@ -42,7 +42,19 @@ int	finish_by_pipe(char *str)
 	while (i > 0 && ft_isspace(str[i]))
 		i--;
 	if (str[i] == '|')
-		return (1);
+	{
+		while (--i > 0 && ft_isspace(str[i]))
+			;
+		if (ft_strchr("<>", str[--i]))
+		{
+			if (str[--i] == '<')
+				return (3);
+			else
+				return (2);
+		}
+		else
+			return (1);
+	}
 	return (0);
 }
 /**
@@ -69,20 +81,20 @@ int	quotes_by_pair(char *str, t_system *systm)
 	while (str[i])
 	{
 		if ((str[i] == SQUOTE || str[i] == DQUOTE) && !str[i + 1])
-			return (add_history(systm->prompt), printf("not interpreting unclosed quotes\n"));
+			return (add_history(systm->prompt), ft_printf_err("not interpreting unclosed quotes\n"));
 		if (str[i] == SQUOTE)
 		{
 			while (str[++i] && str[i] != SQUOTE)
 				;
 			if (!str[i] && str[i - 1] != SQUOTE)
-				return (add_history(systm->prompt), printf("not interpreting unclosed quotes\n"));
+				return (add_history(systm->prompt), ft_printf_err("not interpreting unclosed quotes\n"));
 		}
 		if (str[i] == DQUOTE)
 		{
 			while (str[++i] && str[i] != DQUOTE)
 				;
 			if (!str[i] && str[i - 1] != DQUOTE)
-				return (add_history(systm->prompt), printf("not interpreting unclosed quotes\n"));
+				return (add_history(systm->prompt), ft_printf_err("not interpreting unclosed quotes\n"));
 		}
 		i++;
 	}
@@ -109,19 +121,19 @@ int	check_syntax(t_system *systm)
 
 	cur = systm->lexer;
 	if (cur->token == PIPE)
-		return (printf(TKNSTX, cur->token));
+		return (ft_printf_err(TKNSTX, cur->token));
 	while (cur->next)
 	{
-		if (ft_strchr("<>|", cur->token) && cur->token
-			&& cur->token == cur->next->token)
-			return (printf(TKNSTX, cur->token));
-		if (ft_strchr("#=", cur->token) && cur->token
-			&& cur->token == cur->next->token)
-			return (printf(TKNSSTX, tkntostr(cur->token)));
+		if (finish_by_pipe(systm->prompt) == 2)
+			return (ft_printf_err(TKNSSTX, "|"));
+		if ((cur->token && cur->next->token) && ((ft_strchr("#=<>", cur->token)
+			&& ft_strchr("#=<>|", cur->next->token))
+			|| cur->token == cur->next->token))
+			return (ft_printf_err(TKNSSTX, tkntostr(cur->next->token)));
 		cur = cur->next;
 	}
 	if (cur->token == HERED || cur->token == APPEND || cur->token == INTO
-		|| cur->token == OUTTO)
-		return (printf(NLSTX));
+		|| cur->token == OUTTO || finish_by_pipe(systm->prompt) == 3)
+		return (ft_printf_err(NLSTX));
 	return (0);
 }

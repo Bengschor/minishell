@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:09:17 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/27 15:37:17 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/17 16:57:25 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ static void	init_parser(t_parser *parser, int max)
 		parser[i].outfile = 1;
 		parser[i].path = NULL;
 		parser[i].strs = NULL;
+		parser[i].last = 0;
 		i++;
 	}
+	parser[i - 1].last = 1;
 }
 
 /**

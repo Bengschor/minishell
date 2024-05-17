@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:07:01 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/25 17:41:41 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/17 13:46:23 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ void	ft_printchar(char c, int *count[2]);
 void	ft_printstr(char *str, int **count);
 void	ft_printnbr(int num, int **count, int un);
 void	ft_printhex(long long unsigned int num, int **count, int maj);
+int		ft_printf_err(const char *format, ...);
+void	ft_printchar_err(char c, int *count[2]);
+void	ft_printstr_err(char *str, int **count);
+void	ft_printnbr_err(int num, int **count, int un);
+void	ft_printhex_err(long long unsigned int num, int **count, int maj);
 char	*ft_itoa_unsigned(unsigned int n, char *base);
 char	*ft_itoa_printf(int n);
 

@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:46 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/16 18:16:43 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/17 16:39:19 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_parser
 	int		infile;
 	int		outfile;
 	char	*path;
+	int		last;
 }	t_parser;
 
 typedef struct s_lexer

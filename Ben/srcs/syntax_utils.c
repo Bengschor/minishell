@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:14:25 by bschor            #+#    #+#             */
-/*   Updated: 2024/04/27 15:30:16 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/17 14:47:42 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,11 @@ char	*tkntostr(int token)
 		return (">>");
 	else if (token == '=')
 		return ("<<");
+	else if (token == '<')
+		return ("<");
+	else if (token == '>')
+		return (">");
+	else if (token == '|')
+		return ("|");
 	return (NULL);
 }

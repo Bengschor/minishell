@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:20:39 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/16 18:07:42 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:52:32 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ int	execution(t_system *systm)
 	stdin2 = dup(STDIN_FILENO);
 	stdout2 = dup(STDOUT_FILENO);
 	ft_include_output();
-	if (is_builtins(systm->parser[i].strs[0]) && systm->parser[i + 1].strs == NULL)
+	if (systm->parser[i].strs && systm->parser[i + 1].last
+		&& is_builtins(systm->parser[i].strs[0]))
 		do_builtins(systm, systm->parser[i++].strs);
-	while (systm->parser[i].strs)
+	while (!systm->parser[i].last)
 	{
-		systm->parser[i].path = get_path(systm->parser[i].strs[0], systm);
+		if (systm->parser[i].strs)
+			systm->parser[i].path = get_path(systm->parser[i].strs[0], systm);
 		ft_pipex(systm, i, stdout2);
 		i++;
 	}

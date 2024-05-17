@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 12:21:05 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/16 15:04:42 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/17 15:45:50 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	minishell_loop(t_system *systm)
 			break ;
 		if (quotes_by_pair(systm->prompt, systm) || systm->prompt[0] == '\0')
 			continue ;
-		if (finish_by_pipe(systm->prompt))
+		if (finish_by_pipe(systm->prompt) == 1)
 			if (last_pipe(systm))
 				continue ;
 		add_history(systm->prompt);
@@ -89,7 +89,7 @@ int	main(int argc, char **argv, char *envp[])
 	t_system	systm;
 
 	if (argc != 1 || argv[1])
-		return (printf("program arguments are not interpreted\n"), 0);
+		return (ft_printf_err("program arguments are not interpreted\n"), 0);
 	systm.env = envp;
 	systm.lexer = NULL;
 	systm.parser = NULL;
