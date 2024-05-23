@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:46 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/17 16:39:19 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/23 11:12:26 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@
 
 # define TKNSTX "minishell: syntax error near unexpected token `%c'\n"
 # define TKNSSTX "minishell: syntax error near unexpected token `%s'\n"
-# define NLSTX "minishell: unexpected token `newline'\n"
+# define NLSTX "minishell: syntax error near unexpected token `newline'\n"
 # define XOKACC "minishell: %s: Permission denied\n"
-
 
 /*
 tokens are written as their characters to make the conditions more readable
@@ -45,6 +44,8 @@ their actual value are the 1 character long.
 # define HERED '='
 # define APPEND '#'
 # define PIPE '|'
+
+int	g_status;
 
 typedef struct s_parser
 {
@@ -120,10 +121,11 @@ void	ft_lexer(t_system	*systm);
 int		quotes_by_pair(char *str, t_system *systm);
 int		check_syntax(t_system *systm);
 int		finish_by_pipe(char *str);
-int		last_pipe(t_system *systm);
 
 // syntax_utils.c
 char	*tkntostr(int token);
+int		last_pipe(t_system *systm);
+int		ft_print_syntax(char *str, t_system *systm);
 
 // expander.c
 void	expander(t_system *systm);
@@ -152,6 +154,9 @@ void    ft_suppress_output(void);
 void	new_prompt(int signal);
 void    ft_include_output(void);
 void	ft_handle_sigquit(int signal);
+
+// signals2.c
+void	ft_global1(int signum);
 
 // get_path.c
 char	*ft_strtok(char *str, char c, int nbr, t_system *systm);

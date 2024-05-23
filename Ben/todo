@@ -1,19 +1,11 @@
 BEN:
 - proteger TOUS les mallocs
 - leaks a la fin
-- signaux de sortie et variable globale
-- heredoc pipe
+- norme
 - attention au fd 2 qui est compris dans les std
 - mettre ft_printf_err la ou c'est necessaire
-- last pipe ne retourne pas d'erreur dans le cas d'une redirection avant le dernier pipe
-bash-3.2$ ls | rrtr>|
-bash: syntax error near unexpected token `newline'
-bash-3.2$ ls | > |
-bash: syntax error near unexpected token `|'
-bash-3.2$ ls | ><|
-bash: syntax error near unexpected token `<'
-bash-3.2$ ls | ><|
-bash: syntax error near unexpected token `<'
+- format quotes by pair error mess
+- is a directory
 
 WAS:
 - pwd s'en fout du nombre d'arguments
@@ -21,9 +13,10 @@ WAS:
 - cd sans argument
 
 GLOBAL:
-- change the $?
+- change the $? -> reste que le syntax error
 - utiliser perror
 
 PROBLEMS (different than bash):
 - heredoc executes before last_pipe
 - ctrl -D in heredoc --printf("\x1b[1A> ")--
+- <> and >| syntax errors

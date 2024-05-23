@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 12:21:05 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/17 15:45:50 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/22 09:38:40 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@
 static void	ft_reset_loop(t_system *systm)
 {
 	ft_free_systm(systm);
-	// rl_replace_line("", 0);
-	// rl_on_new_line();
-	// rl_redisplay();
+	g_status = 0;
 }
 
 static char	*get_prompt(char *str, t_system *systm)
@@ -93,7 +91,7 @@ int	main(int argc, char **argv, char *envp[])
 	systm.env = envp;
 	systm.lexer = NULL;
 	systm.parser = NULL;
-	// init_termcap();
+	systm.status = 0;
 	ft_suppress_output();
 	signal(SIGINT, new_prompt);
 	signal(SIGQUIT, (void (*)(int))1);

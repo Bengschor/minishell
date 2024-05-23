@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 08:55:35 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/17 17:52:15 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/22 10:58:18 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ void	ft_child(int fd[2], t_system *systm, int pars_i)
 {
 	close(fd[1]);
 	close(fd[0]);
-	signal(SIGINT, print_nl);
-	signal(SIGQUIT, ft_handle_sigquit);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (systm->parser[pars_i].infile < 0 || systm->parser[pars_i].outfile < 0)
 		exit (1);
 	if (is_builtins(systm->parser[pars_i].path))
 		do_builtins(systm, systm->parser[pars_i].strs);
 	else
-		execve(systm->parser[pars_i].path, systm->parser[pars_i].strs, systm->env);
-	exit (1);
+		if (execve(systm->parser[pars_i].path, systm->parser[pars_i].strs, systm->env))
+			exit (systm->status);
 }
 
 int	ft_parent(int fd[2], t_system *systm, int pars_i)

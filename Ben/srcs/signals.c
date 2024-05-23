@@ -6,7 +6,7 @@
 /*   By: bschor <bschor@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:15:25 by bschor            #+#    #+#             */
-/*   Updated: 2024/05/16 15:26:27 by bschor           ###   ########.fr       */
+/*   Updated: 2024/05/23 11:40:34 by bschor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 void	ft_handle_sigquit(int signal)
 {
-	(void)signal;
+	g_status = signal;
 	ft_putstr_fd("Quit: 3\n", 1);
 }
 void	print_nl(int signal)
 {
-	(void)signal;
+	g_status = signal;
 	ft_putchar_fd('\n', 1);
 }
 
 void	new_prompt(int signal)
 {
-	signal = 0;
-	printf("\n");
-	rl_replace_line("", 0);
+	(void)signal;
+	ft_putchar_fd('\n', 1);
 	rl_on_new_line();
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
