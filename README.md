@@ -61,8 +61,6 @@ A lightweight shell implementation that mimics basic functionalities of bash. Th
    - Signal handlers are reset to their default state, preparing the shell for the next command.
    - The shell is ready to process the next user input, repeating the cycle of reading, parsing, executing, and cleaning up.
 
-### Program Flow Diagram
-
 ## 🚀 Installation
 <details>
 <summary>Click to expand</summary>
